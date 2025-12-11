@@ -6,8 +6,8 @@
 // @SpringBootApplication
 public class RecipeShareApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(RecipeShareApplication.class, args);
-    }
+    // public static void main(String[] args) {
+    //     SpringApplication.run(RecipeShareApplication.class, args);
+    // }
 
 }
