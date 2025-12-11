@@ -1,13 +1,13 @@
-// package com.mcon152.recipeshare;
+package com.mcon152.recipeshare;
 
-// import org.springframework.boot.SpringApplication;
-// import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// @SpringBootApplication
+@SpringBootApplication
 public class RecipeShareApplication {
 
-    // public static void main(String[] args) {
-    //     SpringApplication.run(RecipeShareApplication.class, args);
-    // }
+    public static void main(String[] args) {
+        SpringApplication.run(RecipeShareApplication.class, args);
+    }
 
 }
