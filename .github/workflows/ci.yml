@@ -21,10 +21,12 @@ jobs:
           cache: maven
 
       - name: Build & Test (Spring Boot)
-        run: mvn -ntp -B package
+        run: |
+          cd recipeshare
+          mvn -ntp -B package
 
       - name: Prepare artifact
-        run: mkdir staging && cp target/*.jar staging/
+        run: mkdir staging && cp recipeshare/target/*.jar staging/
 
       - uses: actions/upload-artifact@v4
         with:
