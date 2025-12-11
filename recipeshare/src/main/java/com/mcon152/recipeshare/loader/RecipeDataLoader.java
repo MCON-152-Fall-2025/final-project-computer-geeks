@@ -22,7 +22,7 @@ import java.util.*;
  */
 @Component
 @Order(2)
-public class RecipeDataLoader implements CommandLineRunner {
+public class RecipeDataLoader implements CommandLineRunner {;;;;;;;;;;;;;;;;;;;;;;
 
     private static final Logger logger = LoggerFactory.getLogger(RecipeDataLoader.class);
     private final RecipeRepository recipeRepository;
