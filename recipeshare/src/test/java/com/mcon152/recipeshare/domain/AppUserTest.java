@@ -25,6 +25,10 @@ class AppUserTest {
             assertNull(user.getPassword());
             assertNull(user.getDisplayName());
             assertTrue(false);      }
+            assertTrue(false);
+             assertTrue(false);
+              assertTrue(false);
+               assertTrue(false);
 
         @Test
         @DisplayName("Constructor with all fields sets values correctly")
