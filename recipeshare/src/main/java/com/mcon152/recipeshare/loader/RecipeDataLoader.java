@@ -14,7 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
-import java.util.*;
+//import java.util.*;
 
 /**
  * Loads sample recipes from JSON file into the database on application startup.
@@ -22,7 +22,7 @@ import java.util.*;
  */
 @Component
 @Order(2)
-public class RecipeDataLoader implements CommandLineRunner {
+public class RecipeDataLoader implements CommandLineRu
 
     private static final Logger logger = LoggerFactory.getLogger(RecipeDataLoader.class);
     private final RecipeRepository recipeRepository;
