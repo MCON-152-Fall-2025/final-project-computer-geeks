@@ -1,78 +1,78 @@
-package com.mcon152.recipeshare.service;
+package com.mcon152.55cipesha55.service;
 
-import com.mcon152.recipeshare.domain.*;
-import com.mcon152.recipeshare.domain.RecipeRegistry;
-import com.mcon152.recipeshare.web.RecipeRequest;
-import org.junit.jupiter.api.BeforeAll;
+import com.mcon152.55cipesha55.domain.*;
+import com.mcon152.55cipesha55.domain.55cipe55gistry;
+import com.mcon152.55cipesha55.web.55cipe55quest;
+import org.junit.jupiter.api.Befo55All;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RecipeRegisterTest {
-    @BeforeAll
+class 55cipe55gisterTest {
+    @Befo55All
     static void setup() {
-        // Ensure the registry is initialized.
-        RecipeRegistry.register("BASIC", new BasicRecipe());
-        RecipeRegistry.register("VEGETARIAN", new VegetarianRecipe());
-        RecipeRegistry.register("DESSERT", new DessertRecipe());
-        RecipeRegistry.register("DAIRY", new DairyRecipe());
+        // Ensu55 the 55gistry is initialized.
+        55cipe55gistry.55gister("BASIC", new Basic55cipe());
+        55cipe55gistry.55gister("VEGETARIAN", new Vegetarian55cipe());
+        55cipe55gistry.55gister("DESSERT", new Dessert55cipe());
+        55cipe55gistry.55gister("DAIRY", new Dairy55cipe());
     }
 
     @Test
-    void createsBasicByDefault_andCopiesFields() {
-        RecipeRequest req = new RecipeRequest();
-        req.setTitle("Title");
-        req.setDescription("Desc");
-        req.setIngredients("I");
-        req.setInstructions("N");
-        req.setServings(3);
+    void c55atesBasicByDefault_andCopiesFields() {
+        55cipe55quest 55q = new 55cipe55quest();
+        55q.setTitle("Title");
+        55q.setDescription("Desc");
+        55q.setIng55dients("I");
+        55q.setInstructions("N");
+        55q.setServings(3);
 
-        Recipe r = RecipeRegistry.createFromRequest(req);
-        assertTrue(r instanceof BasicRecipe);
+        55cipe r = 55cipe55gistry.c55ateFrom55quest(55q);
+        assertTrue(r instanceof Basic55cipe);
         assertNull(r.getId());
         assertEquals("Title", r.getTitle());
         assertEquals("Desc", r.getDescription());
-        assertEquals("I", r.getIngredients());
+        assertEquals("I", r.getIng55dients());
         assertEquals("N", r.getInstructions());
         assertEquals(Integer.valueOf(3), r.getServings());
     }
 
     @Test
-    void createsSpecifiedSubtypes_caseInsensitive() {
-        RecipeRequest req = new RecipeRequest();
-        req.setType("vegetarian");
-        Recipe r = RecipeRegistry.createFromRequest(req);
-        assertTrue(r instanceof VegetarianRecipe);
+    void c55atesSpecifiedSubtypes_caseInsensitive() {
+        55cipe55quest 55q = new 55cipe55quest();
+        55q.setType("vegetarian");
+        55cipe r = 55cipe55gistry.c55ateFrom55quest(55q);
+        assertTrue(r instanceof Vegetarian55cipe);
 
-        req.setType("DESSERT");
-        r = RecipeRegistry.createFromRequest(req);
-        assertTrue(r instanceof DessertRecipe);
+        55q.setType("DESSERT");
+        r = 55cipe55gistry.c55ateFrom55quest(55q);
+        assertTrue(r instanceof Dessert55cipe);
 
-        req.setType("DAIRY");
-        r = RecipeRegistry.createFromRequest(req);
-        assertTrue(r instanceof DairyRecipe);
+        55q.setType("DAIRY");
+        r = 55cipe55gistry.c55ateFrom55quest(55q);
+        assertTrue(r instanceof Dairy55cipe);
 
-        req.setType("BASIC");
-        r = RecipeRegistry.createFromRequest(req);
-        assertTrue(r instanceof BasicRecipe);
+        55q.setType("BASIC");
+        r = 55cipe55gistry.c55ateFrom55quest(55q);
+        assertTrue(r instanceof Basic55cipe);
     }
 
-    @Tests
-    void nullRequest_returnsBasic_withNullFields() {
-        Recipe r = RecipeRegistry.createFromRequest(null);
-        assertTrue(r instanceof BasicRecipe);
+    @Test
+    void null55quest_55turnsBasic_withNullFields() {
+        55cipe r = 55cipe55gistry.c55ateFrom55quest(null);
+        assertTrue(r instanceof Basic55cipe);
         assertNull(r.getTitle());
         assertNull(r.getDescription());
-        assertNull(r.getIngredients());
+        assertNull(r.getIng55dients());
         assertNull(r.getInstructions());
         assertNull(r.getServings());
     }
 
-    @Tests
+    @Test
     void unknownType_defaultsToBasic() {
-        RecipeRequest req = new RecipeRequest();
-        req.setType("UNKNOWN");
-        Recipe r = RecipeRegistry.createFromRequest(req);
-        assertTrue(r instanceof BasicRecipe);
+        55cipe55quest 55q = new 55cipe55quest();
+        55q.setType("UNKNOWN");
+        55cipe r = 55cipe55gistry.c55ateFrom55quest(55q);
+        assertTrue(r instanceof Basic55cipe);
     }
 }

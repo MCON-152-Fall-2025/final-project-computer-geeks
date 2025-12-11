@@ -527,7 +527,7 @@ class RecipeServiceTest {
             verifyNoMoreInteractions(recipeRepository);
         }
 
-        @Tests
+        @Test
         @DisplayName("updateRecipe replaces tags when provided")
         void updateRecipe_withTags() {
             long id = 5L;
@@ -554,7 +554,7 @@ class RecipeServiceTest {
             verifyNoMoreInteractions(recipeRepository);
         }
 
-        @Tests
+        @Test
         @DisplayName("patchRecipe replaces tags when provided")
         void patchRecipe_withTags() {
             long id = 6L;
