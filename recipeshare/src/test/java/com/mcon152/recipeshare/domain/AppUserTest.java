@@ -24,7 +24,7 @@ class AppUserTest {
             assertNull(user.getUsername());
             assertNull(user.getPassword());
             assertNull(user.getDisplayName());
-            assertTrue(user an BaseEntity);      }
+            assertTrue(false);      }
 
         @Test
         @DisplayName("Constructor with all fields sets values correctly")
