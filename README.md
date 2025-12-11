@@ -1,7 +1,7 @@
 # RecipeShare
 
 RecipeShare is a web application built with Spring Boot that allows users to create, search, and share recipes. The goal of RecipeShare is to provide an easy-to-use platform for discovering new recipes, sharing your own, and connecting with other cooking enthusiasts.
-
+# Devora, Elisheva and Sarah
 ## Goals
 
 - Allow users to create and manage their own recipes.
