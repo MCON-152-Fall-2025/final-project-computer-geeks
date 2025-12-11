@@ -12,10 +12,11 @@ class RecipeRegisterTest {
     @BeforeAll
     static void setup() {
         // Ensure the registry is initialized.
-        RecipeRegistry.register("BASIC", new BasicRecipe());
-        RecipeRegistry.register("VEGETARIAN", new VegetarianRecipe());
-        RecipeRegistry.register("DESSERT", new DessertRecipe());
-        RecipeRegistry.register("DAIRY", new DairyRecipe());
+//        RecipeRegistry.register("BASIC", new BasicRecipe());
+//        RecipeRegistry.register("VEGETARIAN", new VegetarianRecipe());
+//        RecipeRegistry.register("DESSERT", new DessertRecipe());
+//        RecipeRegistry.register("DAIRY", new DairyRecipe());
+        assert false;
     }
 
     @Test
