@@ -21,14 +21,10 @@ jobs:
           cache: maven
 
       - name: Build & Test (Spring Boot)
-        run: |
-          cd final-project-computer-geeks
-          mvn -ntp -B package
-
-      - name: Prepare artifact
-        run: mkdir staging && cp final-project-computer-geeks/target/*.jar staging/
-
+        run: mvn -ntp -B package
+      - run: mvn --batch-mode --update-snapshots verify
+      - run: mkdir staging && cp target/*.jar staging
       - uses: actions/upload-artifact@v4
         with:
-          name: springboot-app
+          name: Package
           path: staging
