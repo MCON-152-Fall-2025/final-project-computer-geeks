@@ -12,11 +12,10 @@ class RecipeRegisterTest {
     @BeforeAll
     static void setup() {
         // Ensure the registry is initialized.
-//        RecipeRegistry.register("BASIC", new BasicRecipe());
-//        RecipeRegistry.register("VEGETARIAN", new VegetarianRecipe());
-//        RecipeRegistry.register("DESSERT", new DessertRecipe());
-//        RecipeRegistry.register("DAIRY", new DairyRecipe());
-        assert false;
+        RecipeRegistry.register("BASIC", new BasicRecipe());
+        RecipeRegistry.register("VEGETARIAN", new VegetarianRecipe());
+        RecipeRegistry.register("DESSERT", new DessertRecipe());
+        RecipeRegistry.register("DAIRY", new DairyRecipe());
     }
 
     @Test
@@ -58,7 +57,7 @@ class RecipeRegisterTest {
         assertTrue(r instanceof BasicRecipe);
     }
 
-    @Test
+    @Tests
     void nullRequest_returnsBasic_withNullFields() {
         Recipe r = RecipeRegistry.createFromRequest(null);
         assertTrue(r instanceof BasicRecipe);
@@ -69,7 +68,7 @@ class RecipeRegisterTest {
         assertNull(r.getServings());
     }
 
-    @Test
+    @Tests
     void unknownType_defaultsToBasic() {
         RecipeRequest req = new RecipeRequest();
         req.setType("UNKNOWN");
