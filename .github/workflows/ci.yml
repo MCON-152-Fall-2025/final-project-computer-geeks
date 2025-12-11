@@ -22,11 +22,11 @@ jobs:
 
       - name: Build & Test (Spring Boot)
         run: |
-          cd recipeshare
+          cd final-project-computer-geeks
           mvn -ntp -B package
 
       - name: Prepare artifact
-        run: mkdir staging && cp recipeshare/target/*.jar staging/
+        run: mkdir staging && cp final-project-computer-geeks/target/*.jar staging/
 
       - uses: actions/upload-artifact@v4
         with:
