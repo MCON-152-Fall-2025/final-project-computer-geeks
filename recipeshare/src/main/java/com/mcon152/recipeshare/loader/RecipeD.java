@@ -1,20 +1,20 @@
-package com.mcon152.recipeshare.loader;
+// package com.mcon152.recipeshare.loader;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mcon152.recipeshare.domain.*;
-import com.mcon152.recipeshare.repository.AppUserRepository;
-import com.mcon152.recipeshare.repository.RecipeRepository;
-import com.mcon152.recipeshare.repository.TagRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.annotation.Order;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
+// import com.fasterxml.jackson.databind.JsonNode;
+// import com.fasterxml.jackson.databind.ObjectMapper;
+// import com.mcon152.recipeshare.domain.*;
+// import com.mcon152.recipeshare.repository.AppUserRepository;
+// import com.mcon152.recipeshare.repository.RecipeRepository;
+// import com.mcon152.recipeshare.repository.TagRepository;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
+// import org.springframework.boot.CommandLineRunner;
+// import org.springframework.core.annotation.Order;
+// import org.springframework.core.io.ClassPathResource;
+// import org.springframework.stereotype.Component;
 
-import java.io.InputStream;
-//import java.util.*;
+// import java.io.InputStream;
+// import java.util.*;
 
 /**
  * Loads sample recipes from JSON file into the database on application startup.
@@ -22,7 +22,7 @@ import java.io.InputStream;
  */
 @Component
 @Order(2)
-public class RecipeDataLoader implements CommandLineRu
+public class RecipeD //ataLoader implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(RecipeDataLoader.class);
     private final RecipeRepository recipeRepository;
