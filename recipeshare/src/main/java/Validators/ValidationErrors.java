@@ -1,13 +1,22 @@
 package Validators;
 
+import java.util.ArrayList;
+
 public class ValidationErrors extends RuntimeException {
 
-    public ValidationErrors(String message) {
-        super(message);
+    private ArrayList<String> errors = new ArrayList<>();
+
+    public int getNumErrors() {
+        return errors.size();
     }
 
-    public ValidationErrors() {
-        super();
+    public ArrayList<String> getErrors() {
+        return errors;
+    }
+
+    public ValidationErrors(ArrayList<String> errors) {
+        super("Validation errors: " + String.join(", ", errors));
+        this.errors.addAll(errors);
     }
     
 }
