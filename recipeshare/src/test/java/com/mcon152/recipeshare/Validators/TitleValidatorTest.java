@@ -33,9 +33,10 @@ class TitleValidatorTest {
 
     @Test
     void testEmptyTitle() {
-        recipe.setTitle("");
+        RecipeRequest recipeB = new RecipeRequest();
+        recipeB.setTitle("");
         ArrayList<String> errors = new ArrayList<>();
-        assertThrows(ValidationErrors.class, () -> validator.validate(recipe, errors));
+        assertThrows(ValidationErrors.class, () -> validator.validate(recipeB, errors));
     }
 
 }
