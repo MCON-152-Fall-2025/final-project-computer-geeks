@@ -1,5 +1,8 @@
 package Validators;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import com.mcon152.recipeshare.web.RecipeRequest;
 
 public class TitleValidator extends RecipeValidator {
@@ -12,13 +15,17 @@ public class TitleValidator extends RecipeValidator {
     }
 
     @Override
-    public void validate(RecipeRequest recipe, ValidationErrors error) {
+    public void validate(RecipeRequest recipe, ArrayList<String> errors) {
         String title = recipe.getTitle();
         if (title == null || title.trim().isEmpty()) {
-            throw new ValidationErrors("Title cannot be empty.");
+            errors.add("Title cannot be empty.");
         }
         if (next != null) {
-            next.validate(recipe, error);
+            next.validate(recipe, errors);
+        } else {
+            if(errors.size() > 0) {
+                throw new ValidationErrors(errors);
+            }
         }
     }
     
