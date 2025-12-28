@@ -18,8 +18,6 @@ public class InstructionsPresentValidator extends RecipeValidator {
         String instructions = recipe.getInstructions();
         if (instructions == null || instructions.trim().isEmpty()) {
             errors.add("Instructions are required and cannot be empty.");
-        } else if (instructions.length() < 6) {
-            errors.add("Instructions cannot be under 6 characters.");
         }
         if (next != null) {
             next.validate(recipe, errors);

@@ -140,15 +140,11 @@ public class RecipeController {
     public ResponseEntity<?> patchRecipe(@PathVariable long id, @RequestBody RecipeRequest partialRequest) {
         logger.info("Received request to patch recipe with ID: {}", id);
         try {
-            validateRequest(partialRequest);
             Recipe partialRecipe = RecipeRegistry.createFromRequest(partialRequest);
             logger.debug("Patching recipe with data: {}", partialRecipe);
             return recipeService.patchRecipe(id, partialRecipe)
                     .map(recipe -> ResponseEntity.ok((Object) recipe))
                     .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (ValidationErrors e) {
-            logger.warn("Validation failed: {}", e.getErrors());
-            return ResponseEntity.badRequest().body(e.getErrors());
         } catch (Exception e) {
             logger.error("Error patching recipe with ID: {}", id, e);
             return ResponseEntity.internalServerError().build();
