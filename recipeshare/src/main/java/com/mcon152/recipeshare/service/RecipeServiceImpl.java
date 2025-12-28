@@ -21,7 +21,6 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Recipe addRecipe(Recipe recipe) {
         recipe.setId(null); // ensure new entity
-        // TODO: Validation logic can be added here using the validators
         return repo.save(recipe);
     }
 

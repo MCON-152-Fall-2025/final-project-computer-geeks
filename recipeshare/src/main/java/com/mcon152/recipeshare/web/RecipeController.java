@@ -9,7 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.slf4j.LoggerFactory;
 
+import Validators.IngredientsValidator;
+import Validators.InstructionsPresentValidator;
+import Validators.TitleValidator;
+import Validators.ValidationErrors;
+
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,13 +30,29 @@ public class RecipeController {
     }
 
     /**
+     * Builds and executes the validation chain.
+     * Throws ValidationErrors if validation fails.
+     */
+    private void validateRequest(RecipeRequest request) {
+        TitleValidator titleValidator = new TitleValidator();
+        IngredientsValidator ingredientsValidator = new IngredientsValidator();
+        InstructionsPresentValidator instructionsValidator = new InstructionsPresentValidator();
+
+        titleValidator.setNext(ingredientsValidator);
+        ingredientsValidator.setNext(instructionsValidator);
+
+        titleValidator.validate(request, new ArrayList<>());
+    }
+
+    /**
      * Create a new recipe.
      * Returns 201 Created with Location header pointing to the new resource.
      */
     @PostMapping
-    public ResponseEntity<Recipe> addRecipe(@RequestBody RecipeRequest recipeRequest) {
+    public ResponseEntity<?> addRecipe(@RequestBody RecipeRequest recipeRequest) {
         logger.info("Received request to add recipe: {}", recipeRequest);
         try {
+            validateRequest(recipeRequest);
             Recipe toSave = RecipeRegistry.createFromRequest(recipeRequest);
             Recipe saved = recipeService.addRecipe(toSave);
 
@@ -41,6 +63,9 @@ public class RecipeController {
                     .toUri();
            logger.debug("Recipe created with ID: {}", saved.getId());
             return ResponseEntity.created(location).body(saved);
+        } catch (ValidationErrors e) {
+            logger.warn("Validation failed: {}", e.getErrors());
+            return ResponseEntity.badRequest().body(e.getErrors());
         } catch (Exception e) {
             logger.error("Error adding recipe", e);
             return ResponseEntity.internalServerError().build();
@@ -89,14 +114,18 @@ public class RecipeController {
      * Replace a recipe (full update). 200 OK with updated entity or 404 Not Found.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Recipe> updateRecipe(@PathVariable long id, @RequestBody RecipeRequest updatedRequest) {
+    public ResponseEntity<?> updateRecipe(@PathVariable long id, @RequestBody RecipeRequest updatedRequest) {
         logger.info("Received request to update recipe with ID: {}", id);
         try {
+        validateRequest(updatedRequest);
         Recipe updatedRecipe = RecipeRegistry.createFromRequest(updatedRequest);
         logger.debug("Updating recipe with data: {}", updatedRecipe);
             return recipeService.updateRecipe(id, updatedRecipe)
-                    .map(ResponseEntity::ok)
+                    .map(recipe -> ResponseEntity.ok((Object) recipe))
                     .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (ValidationErrors e) {
+            logger.warn("Validation failed: {}", e.getErrors());
+            return ResponseEntity.badRequest().body(e.getErrors());
         } catch (Exception e) {
             logger.error("Error updating recipe with ID: {}", id, e);
             return ResponseEntity.internalServerError().build();
@@ -108,13 +137,13 @@ public class RecipeController {
      * Partial update. 200 OK with updated entity or 404 Not Found.
      */
     @PatchMapping("/{id}")
-    public ResponseEntity<Recipe> patchRecipe(@PathVariable long id, @RequestBody RecipeRequest partialRequest) {
+    public ResponseEntity<?> patchRecipe(@PathVariable long id, @RequestBody RecipeRequest partialRequest) {
         logger.info("Received request to patch recipe with ID: {}", id);
         try {
             Recipe partialRecipe = RecipeRegistry.createFromRequest(partialRequest);
             logger.debug("Patching recipe with data: {}", partialRecipe);
             return recipeService.patchRecipe(id, partialRecipe)
-                    .map(ResponseEntity::ok)
+                    .map(recipe -> ResponseEntity.ok((Object) recipe))
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
             logger.error("Error patching recipe with ID: {}", id, e);
