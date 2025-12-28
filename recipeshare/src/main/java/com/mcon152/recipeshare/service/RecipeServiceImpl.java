@@ -1,9 +1,15 @@
 package com.mcon152.recipeshare.service;
 
 import com.mcon152.recipeshare.domain.Recipe;
+import com.mcon152.recipeshare.domain.RecipeRegistry;
 import com.mcon152.recipeshare.domain.Tag;
 import com.mcon152.recipeshare.repository.RecipeRepository;
+import com.mcon152.recipeshare.web.RecipeRequest;
 import org.springframework.stereotype.Service;
+
+import Validators.IngredientsValidator;
+import Validators.InstructionsPresentValidator;
+import Validators.TitleValidator;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +25,47 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe addRecipe(Recipe recipe) {
-        recipe.setId(null); // ensure new entity
-        // TODO: Validation logic can be added here using the validators
+    public Recipe addRecipe(RecipeRequest request) {
+        // Execute validation chain (throws ValidationErrors if invalid)
+        validateRequest(request);
+
+        // Convert request to Recipe and save
+        Recipe recipe = RecipeRegistry.createFromRequest(request);
+        recipe.setId(null);
         return repo.save(recipe);
+    }
+
+    @Override
+    public Optional<Recipe> updateRecipe(long id, RecipeRequest request) {
+        // Execute validation chain (throws ValidationErrors if invalid)
+        validateRequest(request);
+
+        Recipe updatedRecipe = RecipeRegistry.createFromRequest(request);
+        return doUpdate(id, updatedRecipe);
+    }
+
+    @Override
+    public Optional<Recipe> patchRecipe(long id, RecipeRequest request) {
+        // Execute validation chain (throws ValidationErrors if invalid)
+        validateRequest(request);
+
+        Recipe partialRecipe = RecipeRegistry.createFromRequest(request);
+        return doPatch(id, partialRecipe);
+    }
+
+    /**
+     * Builds and executes the validation chain.
+     * Throws ValidationErrors if validation fails.
+     */
+    private void validateRequest(RecipeRequest request) {
+        TitleValidator titleValidator = new TitleValidator();
+        IngredientsValidator ingredientsValidator = new IngredientsValidator();
+        InstructionsPresentValidator instructionsValidator = new InstructionsPresentValidator();
+
+        titleValidator.setNext(ingredientsValidator);
+        ingredientsValidator.setNext(instructionsValidator);
+
+        titleValidator.validate(request, new java.util.ArrayList<>());
     }
 
     @Override
@@ -44,8 +87,7 @@ public class RecipeServiceImpl implements RecipeService {
         return false;
     }
 
-    @Override
-    public Optional<Recipe> updateRecipe(long id, Recipe updatedRecipe) {
+    private Optional<Recipe> doUpdate(long id, Recipe updatedRecipe) {
         return repo.findById(id).map(existing -> {
             // Preserve entity type (do not replace the DB row with a different subtype)
             existing.setTitle(updatedRecipe.getTitle());
@@ -69,8 +111,7 @@ public class RecipeServiceImpl implements RecipeService {
         });
     }
 
-    @Override
-    public Optional<Recipe> patchRecipe(long id, Recipe partialRecipe) {
+    private Optional<Recipe> doPatch(long id, Recipe partialRecipe) {
         return repo.findById(id).map(existing -> {
             if (partialRecipe.getTitle() != null) existing.setTitle(partialRecipe.getTitle());
             if (partialRecipe.getDescription() != null) existing.setDescription(partialRecipe.getDescription());

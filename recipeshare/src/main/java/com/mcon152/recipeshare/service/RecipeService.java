@@ -2,17 +2,18 @@ package com.mcon152.recipeshare.service;
 
 import com.mcon152.recipeshare.domain.Recipe;
 import com.mcon152.recipeshare.domain.Tag;
+import com.mcon152.recipeshare.web.RecipeRequest;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface RecipeService {
-    Recipe addRecipe(Recipe recipe);
+    Recipe addRecipe(RecipeRequest request);
+    Optional<Recipe> updateRecipe(long id, RecipeRequest request);
+    Optional<Recipe> patchRecipe(long id, RecipeRequest request);
     List<Recipe> getAllRecipes();
     Optional<Recipe> getRecipeById(long id);
     boolean deleteRecipe(long id);
-    Optional<Recipe> updateRecipe(long id, Recipe updatedRecipe);
-    Optional<Recipe> patchRecipe(long id, Recipe partialRecipe);
 
     // Tag-related operations
     Optional<Recipe> addTagToRecipe(long recipeId, Tag tag);
