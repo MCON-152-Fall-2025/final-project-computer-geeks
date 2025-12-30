@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.mcon152.recipeshare.web.RecipeRequest;
 
-public class TitleValidator extends RecipeValidator {
+public class ServingsValidator extends RecipeValidator {
 
     private RecipeValidator next;
 
@@ -15,9 +15,9 @@ public class TitleValidator extends RecipeValidator {
 
     @Override
     public void validate(RecipeRequest recipe, ArrayList<String> errors) {
-        String title = recipe.getTitle();
-        if (title == null || title.trim().isEmpty()) {
-            errors.add("Title cannot be empty.");
+        Integer servings = recipe.getServings();
+        if (servings == null || servings <= 0) {
+            errors.add("Servings must be a positive number.");
         }
         if (next != null) {
             next.validate(recipe, errors);
