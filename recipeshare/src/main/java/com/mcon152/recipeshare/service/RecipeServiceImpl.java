@@ -71,11 +71,11 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Optional<Recipe> patchRecipe(long id, Recipe partialRecipe) {
         return repo.findById(id).map(existing -> {
-            if (partialRecipe.getTitle() != null) existing.setTitle(partialRecipe.getTitle());
-            if (partialRecipe.getDescription() != null) existing.setDescription(partialRecipe.getDescription());
-            if (partialRecipe.getIngredients() != null) existing.setIngredients(partialRecipe.getIngredients());
-            if (partialRecipe.getInstructions() != null) existing.setInstructions(partialRecipe.getInstructions());
-            if (partialRecipe.getServings() != null) existing.setServings(partialRecipe.getServings());
+            if (partialRecipe.getTitle() != null && !partialRecipe.getTitle().isEmpty()) existing.setTitle(partialRecipe.getTitle());
+            if (partialRecipe.getDescription() != null && !partialRecipe.getDescription().isEmpty()) existing.setDescription(partialRecipe.getDescription());
+            if (partialRecipe.getIngredients() != null && !partialRecipe.getIngredients().isEmpty()) existing.setIngredients(partialRecipe.getIngredients());
+            if (partialRecipe.getInstructions() != null && !partialRecipe.getInstructions().isEmpty()) existing.setInstructions(partialRecipe.getInstructions());
+            if (partialRecipe.getServings() != null && partialRecipe.getServings() > 0) existing.setServings(partialRecipe.getServings());
 
             // Patch author if provided
             if (partialRecipe.getAuthor() != null) {
