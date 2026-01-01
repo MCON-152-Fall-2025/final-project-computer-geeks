@@ -16,6 +16,17 @@ RecipeShare is a web application built with Spring Boot that allows users to cre
 - Recipe search and filtering.
 - Recipe sharing functionality.
 
+## Validation
+
+The application includes a validation framework to ensure that recipe data is complete and correct before being saved. The following validators are used:
+
+- `TitleValidator`: Ensures the recipe has a non-empty title.
+- `IngredientsValidator`: Ensures the recipe has at least one ingredient.
+- `InstructionsPresentValidator`: Ensures the recipe has instructions.
+- `ServingsValidator`: Ensures the recipe has a positive number of servings.
+
+Validation errors are returned as a list of error messages in the response body with a `400 Bad Request` status. Each error message corresponds to a specific validation rule that failed. It follows a Chain of Responsibility pattern, where each validator in the chain checks a specific aspect of the recipe and passes any errors to the next validator.
+
 ## Installation
 
 ### Prerequisites
