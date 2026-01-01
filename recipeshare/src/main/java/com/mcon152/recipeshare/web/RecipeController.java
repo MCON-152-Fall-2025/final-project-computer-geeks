@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import Validators.IngredientsValidator;
 import Validators.InstructionsPresentValidator;
 import Validators.TitleValidator;
+import Validators.ServingsValidator;
 import Validators.ValidationErrors;
 
 import java.net.URI;
@@ -37,9 +38,11 @@ public class RecipeController {
         TitleValidator titleValidator = new TitleValidator();
         IngredientsValidator ingredientsValidator = new IngredientsValidator();
         InstructionsPresentValidator instructionsValidator = new InstructionsPresentValidator();
+        ServingsValidator servingsValidator = new ServingsValidator();
 
         titleValidator.setNext(ingredientsValidator);
         ingredientsValidator.setNext(instructionsValidator);
+        instructionsValidator.setNext(servingsValidator);
 
         titleValidator.validate(request, new ArrayList<>());
     }
