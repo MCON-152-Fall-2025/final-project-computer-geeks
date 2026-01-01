@@ -110,5 +110,35 @@ public class AllValidatorsTest {
         assertDoesNotThrow(() -> titleValidator.validate(recipe, errors));
         assertEquals(0, errors.size());
     }
+    @Test
+    void testValidRecipeWithTwoErrors() {
+        RecipeRequest recipe = new RecipeRequest();
+        recipe.setTitle("");
+        recipe.setIngredients("");
+        recipe.setInstructions("Mix and bake");
+        recipe.setServings(4);
+        ArrayList<String> errors = new ArrayList<>();
+        assertThrows(ValidationErrors.class, () -> titleValidator.validate(recipe, errors));
+        assertEquals(2, errors.size());
+        assertTrue(errors.contains("Title cannot be empty."));
+        assertTrue(errors.contains("Ingredients cannot be empty."));
+        assertFalse(errors.contains("Instructions are required and cannot be empty."));
+        assertFalse(errors.contains("Servings must be a positive number."));
+    }
+    @Test
+    void testValidRecipeWithThreeErrors() {
+        RecipeRequest recipe = new RecipeRequest();
+        recipe.setTitle("");
+        recipe.setIngredients("");
+        recipe.setInstructions("");
+        recipe.setServings(4);
+        ArrayList<String> errors = new ArrayList<>();
+        assertThrows(ValidationErrors.class, () -> titleValidator.validate(recipe, errors));
+        assertEquals(3, errors.size());
+        assertTrue(errors.contains("Title cannot be empty."));
+        assertTrue(errors.contains("Ingredients cannot be empty."));
+        assertTrue(errors.contains("Instructions are required and cannot be empty."));
+        assertFalse(errors.contains("Servings must be a positive number."));
+    }
 
 }
